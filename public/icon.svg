@@ -1,7 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <rect width="512" height="512" rx="96" fill="#f28c28"/>
-  <circle cx="256" cy="216" r="132" fill="#ffd84d"/>
-  <circle cx="208" cy="170" r="36" fill="#fff6d6"/>
-  <rect x="196" y="338" width="120" height="44" rx="10" fill="#2b2a28"/>
-  <rect x="210" y="392" width="92" height="34" rx="10" fill="#2b2a28"/>
+  <defs>
+    <radialGradient id="glow" cx="256" cy="206" r="210" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff3b0" stop-opacity="0.9"/>
+      <stop offset="0.55" stop-color="#ffd84d" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#ffd84d" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glass" cx="226" cy="168" r="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffbe6"/>
+      <stop offset="0.6" stop-color="#ffe066"/>
+      <stop offset="1" stop-color="#ffc832"/>
+    </radialGradient>
+  </defs>
+  <circle cx="256" cy="206" r="210" fill="url(#glow)"/>
+  <g stroke="#fff6d6" stroke-width="20" stroke-linecap="round">
+    <path d="M256 40v34M120 96l24 24M392 96l-24 24M74 206h34M438 206h-34"/>
+  </g>
+  <g stroke="#2b2a28" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M208 326c0-40-64-62-64-122a112 112 0 1 1 224 0c0 60-64 82-64 122z" fill="url(#glass)"/>
+    <path d="M200 326h112v62a20 20 0 0 1-20 20h-72a20 20 0 0 1-20-20z" fill="#9aa0a6"/>
+    <path d="M202 352h108M202 380h108" fill="none"/>
+    <path d="M232 408h48v8a24 24 0 0 1-48 0z" fill="#2b2a28"/>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M228 326v-92M284 326v-92" stroke="#7a5a2a" stroke-width="8"/>
+    <path d="M228 234c0-22 14-22 14 0s14 22 14 0 14-22 14 0 14 22 14 0" stroke="#ff7a00" stroke-width="10"/>
+    <path d="M186 178a76 76 0 0 1 40-52" stroke="#ffffff" stroke-width="14" stroke-opacity="0.85"/>
+  </g>
 </svg>
