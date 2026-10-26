@@ -879,11 +879,12 @@ button[aria-pressed='true'] {
   margin-right: auto;
 }
 
-/* Only a gear, so it doesn't draw a child's eye away from the levels. */
+/* Anchors the drop-down menu. */
 .settings {
   position: relative;
 }
 
+/* Only a gear, so it doesn't draw a child's eye away from the levels. */
 .settings-gear {
   display: inline-flex;
   align-items: center;
