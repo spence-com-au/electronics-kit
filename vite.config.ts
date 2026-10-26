@@ -28,7 +28,8 @@ export default defineConfig({
     VitePWA({
       registerType: 'prompt',
       // The PNG icons are drawn from the SVG at build time, so only the SVG is in git. The maskable
-      // and Apple icons fill the square on the icon's orange, with the bulb inside the safe zone.
+      // and Apple icons fill the square on the icon's orange; the maskable one shrinks the bulb to
+      // 80 % to keep it inside the safe circle, the Apple one to 90 %.
       pwaAssets: {
         image: 'public/icon.svg',
         preset: {

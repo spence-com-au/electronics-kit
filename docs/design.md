@@ -419,8 +419,9 @@ tests/e2e/   Playwright
   home screen), in landscape, with a bulb icon: a lit bulb with a glowing filament and a screw
   base, on orange. Only the SVG (`public/icon.svg`) is in git; the build draws the PNGs from it
   (`pwaAssets`, with `@vite-pwa/assets-generator`) and adds them to the manifest and `<head>`. The
-  maskable and Apple touch PNGs fill the square and keep the bulb inside the safe circle. Its `id`
-  is set to the start URL, so it stays apart from other apps on `spence.com.au`.
+  maskable and Apple touch PNGs fill the square; the maskable one scales the bulb to 80 % to keep it
+  inside the safe circle, and the Apple one to 90 %. The manifest's `id` is set to the start URL, so
+  it stays apart from other apps on `spence.com.au`.
 - **Install offer.** Chrome's own install banner shows only now and then, and its menu item is easy
   to miss, so the level list offers **Install** whenever the browser allows it
   (`beforeinstallprompt`). Once installed, the manifest's `related_applications` (the game itself)
