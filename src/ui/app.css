@@ -880,7 +880,11 @@ button[aria-pressed='true'] {
 }
 
 /* Only a gear, so it doesn't draw a child's eye away from the levels. */
-.list-header .settings {
+.settings {
+  position: relative;
+}
+
+.settings-gear {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -888,9 +892,47 @@ button[aria-pressed='true'] {
   padding: 6px 8px;
 }
 
-.list-header .settings .tool-icon {
+.settings-gear .tool-icon {
   width: 30px;
   height: 30px;
+}
+
+/* Drops down from the gear, over the levels, lined up with its right edge. */
+.settings-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  box-sizing: border-box;
+  width: min(22rem, calc(100vw - 32px));
+  padding: 16px;
+  border-radius: 12px;
+  border: 2px solid var(--plastic-edge);
+  background: var(--board);
+  color: var(--ink);
+  box-shadow: 0 6px 16px rgb(0 0 0 / 30%);
+}
+
+.settings-menu[hidden] {
+  display: none;
+}
+
+/* The install offer is already on the menu's card, so it needs no card of its own. */
+.settings-menu .update {
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.settings-menu .version-text {
+  margin: 0;
+  font-size: 0.85em;
 }
 
 /* Who's playing, under the title, so a child on a shared device can tell it's their progress. */
@@ -1006,22 +1048,13 @@ button[aria-pressed='true'] {
   text-align: left;
 }
 
-.version {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 32px;
-  font-size: 0.85em;
-}
-
 .version-text {
   opacity: 0.6;
 }
 
 /* Quiet, so a child isn't drawn to it, but still a real button. */
-.version button {
-  font-size: inherit;
+.settings-menu .grown-ups {
+  font-size: 0.85em;
   opacity: 0.8;
 }
 

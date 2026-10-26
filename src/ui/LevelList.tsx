@@ -5,7 +5,7 @@ import { chapterTitles, levelText } from '../levels/strings';
 import { strings } from './strings';
 import { SmallScreenNote } from './ScreenNotes';
 import { UpdatePrompt } from './UpdatePrompt';
-import { ToolIcon } from './ToolIcon';
+import { SettingsMenu } from './SettingsMenu';
 
 interface LevelListProps {
   levels: readonly Level[];
@@ -14,13 +14,15 @@ interface LevelListProps {
   profile: Profile;
   onPlay: (level: Level) => void;
   onSandbox: () => void;
-  /** Changing player, installing and the grown-ups' settings, kept out of a child's way. */
-  onSettings: () => void;
+  /** Null until saved players arrive, which would undo a change made before them. */
+  onPlayers: (() => void) | null;
+  /** The grown-ups' settings; null until saved players arrive, like `onPlayers`. */
+  onGrownUps: (() => void) | null;
 }
 
 /**
  * Every level by chapter, with the best stars earned on each, the sandbox and a gear for the
- * settings. All are open from the start.
+ * settings menu. All are open from the start.
  */
 export function LevelList({
   levels,
@@ -28,7 +30,8 @@ export function LevelList({
   profile,
   onPlay,
   onSandbox,
-  onSettings,
+  onPlayers,
+  onGrownUps,
 }: LevelListProps) {
   const chapters = [...new Set(levels.map((level) => level.chapter))];
   return (
@@ -38,15 +41,7 @@ export function LevelList({
         <button type="button" className="primary" onClick={onSandbox}>
           {strings.sandbox}
         </button>
-        <button
-          type="button"
-          className="settings"
-          aria-label={strings.settings}
-          title={strings.settings}
-          onClick={onSettings}
-        >
-          <ToolIcon name="settings" />
-        </button>
+        <SettingsMenu onPlayers={onPlayers} onGrownUps={onGrownUps} />
       </header>
       <p className="playing-as">
         <span className="avatar" aria-hidden="true">
