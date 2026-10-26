@@ -5,7 +5,7 @@ import { chapterTitles, levelText } from '../levels/strings';
 import { strings } from './strings';
 import { SmallScreenNote } from './ScreenNotes';
 import { UpdatePrompt } from './UpdatePrompt';
-import { InstallPrompt } from './InstallPrompt';
+import { ToolIcon } from './ToolIcon';
 
 interface LevelListProps {
   levels: readonly Level[];
@@ -14,15 +14,13 @@ interface LevelListProps {
   profile: Profile;
   onPlay: (level: Level) => void;
   onSandbox: () => void;
-  /** Null until saved players arrive, which would undo a change made before them. */
-  onPlayers: (() => void) | null;
-  /** The grown-ups' settings; null until saved players arrive, like `onPlayers`. */
-  onGrownUps: (() => void) | null;
+  /** Changing player, installing and the grown-ups' settings, kept out of a child's way. */
+  onSettings: () => void;
 }
 
 /**
- * Every level by chapter, with the best stars earned on each, and the sandbox. All are open from
- * the start.
+ * Every level by chapter, with the best stars earned on each, the sandbox and a gear for the
+ * settings. All are open from the start.
  */
 export function LevelList({
   levels,
@@ -30,8 +28,7 @@ export function LevelList({
   profile,
   onPlay,
   onSandbox,
-  onPlayers,
-  onGrownUps,
+  onSettings,
 }: LevelListProps) {
   const chapters = [...new Set(levels.map((level) => level.chapter))];
   return (
@@ -41,20 +38,25 @@ export function LevelList({
         <button type="button" className="primary" onClick={onSandbox}>
           {strings.sandbox}
         </button>
+        <button
+          type="button"
+          className="settings"
+          aria-label={strings.settings}
+          title={strings.settings}
+          onClick={onSettings}
+        >
+          <ToolIcon name="settings" />
+        </button>
       </header>
       <p className="playing-as">
         <span className="avatar" aria-hidden="true">
           {profile.avatar}
         </span>
         {strings.playingAs(profile.name)}
-        <button type="button" onClick={onPlayers ?? undefined} disabled={!onPlayers}>
-          {strings.changePlayer}
-        </button>
       </p>
       <SmallScreenNote />
       {/* Offered only between levels, never in the middle of one. */}
       <UpdatePrompt />
-      <InstallPrompt />
       {chapters.map((chapter) => (
         <section key={chapter} className="chapter">
           <h2>{strings.chapter(chapter, chapterTitles[chapter] ?? '')}</h2>
@@ -78,12 +80,6 @@ export function LevelList({
           </ol>
         </section>
       ))}
-      <footer className="version">
-        <span className="version-text">{strings.version(__APP_VERSION__, __APP_COMMIT__)}</span>
-        <button type="button" onClick={onGrownUps ?? undefined} disabled={!onGrownUps}>
-          {strings.forGrownUps}
-        </button>
-      </footer>
     </main>
   );
 }

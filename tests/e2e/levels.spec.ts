@@ -271,6 +271,7 @@ test('offers to change player only once saved players arrive', async ({ page }) 
   // A player added or chosen before then would be lost when the saved players replaced them.
   const releaseStorage = await holdStorage(page);
   await page.goto('./');
+  await page.getByRole('button', { name: 'Settings' }).click();
   await expect(page.getByRole('button', { name: 'Change player' })).toBeDisabled();
 
   await releaseStorage();
@@ -524,6 +525,7 @@ test('keeps saved data it can’t read when the player playing is chosen again',
   await save(page, newer);
   await page.reload();
 
+  await page.getByRole('button', { name: 'Settings' }).click();
   await page.getByRole('button', { name: 'Change player' }).click();
   await page.getByRole('button', { name: /Player 1/ }).click();
   await expect(page.getByText('Playing as Player 1')).toBeVisible();
@@ -536,6 +538,7 @@ test('adds a player with their own progress, and switches back', async ({ page }
   await finishMindTheGap(page);
   await page.getByRole('button', { name: 'Levels' }).click();
 
+  await page.getByRole('button', { name: 'Settings' }).click();
   await page.getByRole('button', { name: 'Change player' }).click();
   await page.getByLabel('Name').fill('Mia');
   await page.getByRole('button', { name: 'Picture 🚀' }).click();
@@ -543,14 +546,32 @@ test('adds a player with their own progress, and switches back', async ({ page }
   await expect(page.getByText('Playing as Mia')).toBeVisible();
   await expect(page.locator('[data-level="loop-3"]').getByLabel('0 of 3 stars')).toBeVisible();
 
+  await page.getByRole('button', { name: 'Settings' }).click();
   await page.getByRole('button', { name: 'Change player' }).click();
   await page.getByRole('button', { name: /Player 1/ }).click();
   await expect(page.getByText('Playing as Player 1')).toBeVisible();
   await expect(page.locator('[data-level="loop-3"]').getByLabel('3 of 3 stars')).toBeVisible();
 });
 
-test('shows the version', async ({ page }) => {
+test('keeps changing player, the grown-ups’ settings and the version behind the gear', async ({
+  page,
+}) => {
+  await expect(page.getByText('Playing as Player 1')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Change player' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'For grown-ups' })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Settings' }).click();
+  await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
   await expect(page.getByText(/^Version \d+\.\d+\.\d+ \(\w+\)$/)).toBeVisible();
+
+  // Change player and For grown-ups go back to the settings, and they back to the levels.
+  await page.getByRole('button', { name: 'Change player' }).click();
+  await expect(page.getByRole('heading', { name: 'Who’s playing?' })).toBeVisible();
+  await page.getByRole('button', { name: 'Settings' }).click();
+  await page.getByRole('button', { name: 'For grown-ups' }).click();
+  await expect(page.getByRole('heading', { name: 'For grown-ups' })).toBeVisible();
+  await page.getByRole('button', { name: 'Settings' }).click();
+  await page.getByRole('button', { name: 'Levels' }).click();
+  await expect(page.getByRole('heading', { name: 'Chapter 1: Make a loop' })).toBeVisible();
 });
 
 test.describe('Volty', () => {
@@ -662,6 +683,7 @@ test('asks to turn a phone held upright sideways, and only then', async ({ page 
 });
 
 test('lets a grown-up unlock everything, behind the sum, for good', async ({ page }) => {
+  await page.getByRole('button', { name: 'Settings' }).click();
   await page.getByRole('button', { name: 'For grown-ups' }).click();
   const question = page.getByText(/What is \d+ \+ \d+\?/);
   const sum = async () => {

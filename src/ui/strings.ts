@@ -40,6 +40,7 @@ export const strings = {
   soundOff: 'Sound off',
   backToLevels: 'Levels',
   sandbox: 'Sandbox',
+  settings: 'Settings',
   whoIsPlaying: 'Who’s playing?',
   changePlayer: 'Change player',
   playingAs: (name: string) => `Playing as ${name}`,

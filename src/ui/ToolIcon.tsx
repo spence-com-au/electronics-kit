@@ -10,11 +10,13 @@ export type ToolIconName =
   | 'speed'
   | 'sound-on'
   | 'sound-off'
-  | 'meter';
+  | 'meter'
+  | 'settings';
 
 /**
  * A picture beside a toolbar button's word, for a child who can't read it yet. It is decoration:
- * the word stays the button's name.
+ * the word stays the button's name. The level list's settings gear is the one button with no word,
+ * so its `aria-label` names it instead.
  */
 export function ToolIcon({ name }: { name: ToolIconName }) {
   return (
@@ -84,6 +86,12 @@ const paths: Readonly<Record<ToolIconName, ReactNode>> = {
       <rect x="5" y="2.5" width="14" height="19" rx="2.5" />
       <path d="M8 6h8v4H8zM12 16l1.8-1.8" />
       <circle cx="12" cy="16" r="2.5" />
+    </>
+  ),
+  settings: (
+    <>
+      <path d="M19.3 9.8L21.8 10.3L21.8 13.7L19.3 14.2L18.7 15.6L20.2 17.7L17.7 20.2L15.6 18.7L14.2 19.3L13.7 21.8L10.3 21.8L9.8 19.3L8.4 18.7L6.3 20.2L3.8 17.7L5.3 15.6L4.7 14.2L2.2 13.7L2.2 10.3L4.7 9.8L5.3 8.4L3.8 6.3L6.3 3.8L8.4 5.3L9.8 4.7L10.3 2.2L13.7 2.2L14.2 4.7L15.6 5.3L17.7 3.8L20.2 6.3L18.7 8.4z" />
+      <circle cx="12" cy="12" r="3" />
     </>
   ),
 };
