@@ -563,8 +563,12 @@ test('keeps changing player, the grown-ups’ settings and the version behind th
   await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
   await expect(page.getByText(/^Version \d+\.\d+\.\d+ \(\w+\)$/)).toBeVisible();
 
-  // Each setting goes back to the settings, and they back to the levels.
+  // Change player and For grown-ups go back to the settings, and they back to the levels.
   await page.getByRole('button', { name: 'Change player' }).click();
+  await expect(page.getByRole('heading', { name: 'Who’s playing?' })).toBeVisible();
+  await page.getByRole('button', { name: 'Settings' }).click();
+  await page.getByRole('button', { name: 'For grown-ups' }).click();
+  await expect(page.getByRole('heading', { name: 'For grown-ups' })).toBeVisible();
   await page.getByRole('button', { name: 'Settings' }).click();
   await page.getByRole('button', { name: 'Levels' }).click();
   await expect(page.getByRole('heading', { name: 'Chapter 1: Make a loop' })).toBeVisible();

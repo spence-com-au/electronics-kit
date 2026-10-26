@@ -37,7 +37,8 @@ the decision and the main reason for it. When the design changes, update this fi
   one, and a profile's blank name or unknown avatar mended.
 - **Settings** (`src/ui/SettingsScreen.tsx`): a gear button beside **Sandbox** in the level list's
   header opens them, keeping out of a child's way what they rarely need: **Change player**, the
-  install offer, **For grown-ups** and the version. Each of those screens goes back to the settings.
+  install offer, **For grown-ups** and the version. The Change player and For grown-ups screens
+  go back to the settings.
 - **Profiles** (`src/ui/PlayersScreen.tsx`): the level list says who's playing; the settings say so
   too, with **Change player** to pick another or add one by name (up to 20 characters) and one of
   eight emoji pictures, so a child who can't spell their name yet still knows theirs. A new player

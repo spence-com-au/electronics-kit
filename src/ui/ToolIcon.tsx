@@ -15,7 +15,8 @@ export type ToolIconName =
 
 /**
  * A picture beside a toolbar button's word, for a child who can't read it yet. It is decoration:
- * the word stays the button's name.
+ * the word stays the button's name. The level list's settings gear is the one button with no word,
+ * so its `aria-label` names it instead.
  */
 export function ToolIcon({ name }: { name: ToolIconName }) {
   return (
