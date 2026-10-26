@@ -17,7 +17,7 @@ test('offers to install when the browser allows it, then says where to find it',
   page,
 }) => {
   await page.goto('./');
-  await expect(page.getByRole('heading', { name: 'Chapter 1: Make a loop' })).toBeVisible();
+  await page.getByRole('button', { name: 'Settings' }).click();
   // Nothing until the browser offers to install.
   await expect(page.getByRole('button', { name: 'Install' })).toHaveCount(0);
 

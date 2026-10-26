@@ -22,7 +22,7 @@ export function PlayersScreen({ players, onChoose, onAdd, onBack }: PlayersScree
     <main>
       <header className="level-header">
         <button type="button" onClick={onBack}>
-          {strings.backToLevels}
+          {strings.settings}
         </button>
         <h1>{strings.whoIsPlaying}</h1>
       </header>

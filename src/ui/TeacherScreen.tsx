@@ -23,7 +23,7 @@ export function TeacherScreen({ unlockAll, onUnlockAll, onBack }: TeacherScreenP
     <main>
       <header className="level-header">
         <button type="button" onClick={onBack}>
-          {strings.backToLevels}
+          {strings.settings}
         </button>
         <h1>{strings.grownUps}</h1>
       </header>

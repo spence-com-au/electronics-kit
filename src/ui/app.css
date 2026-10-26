@@ -872,8 +872,25 @@ button[aria-pressed='true'] {
 .list-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 16px;
+}
+
+.list-header h1 {
+  margin-right: auto;
+}
+
+/* Only a gear, so it doesn't draw a child's eye away from the levels. */
+.list-header .settings {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  padding: 6px 8px;
+}
+
+.list-header .settings .tool-icon {
+  width: 30px;
+  height: 30px;
 }
 
 /* Who's playing, under the title, so a child on a shared device can tell it's their progress. */

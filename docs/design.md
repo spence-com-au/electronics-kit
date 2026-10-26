@@ -35,10 +35,13 @@ the decision and the main reason for it. When the design changes, update this fi
   it off. Data that can't be read (corrupt, or written by a newer version) loads as one player with
   no progress and is only overwritten once something is saved; unreadable entries are dropped one by
   one, and a profile's blank name or unknown avatar mended.
-- **Profiles** (`src/ui/PlayersScreen.tsx`): the level list says who's playing, with **Change
-  player** to pick another or add one by name (up to 20 characters) and one of eight emoji
-  pictures, so a child who can't spell their name yet still knows theirs. A new player starts
-  with no stars and is then the one playing.
+- **Settings** (`src/ui/SettingsScreen.tsx`): a gear button beside **Sandbox** in the level list's
+  header opens them, keeping out of a child's way what they rarely need: **Change player**, the
+  install offer, **For grown-ups** and the version. Each of those screens goes back to the settings.
+- **Profiles** (`src/ui/PlayersScreen.tsx`): the level list says who's playing; the settings say so
+  too, with **Change player** to pick another or add one by name (up to 20 characters) and one of
+  eight emoji pictures, so a child who can't spell their name yet still knows theirs. A new player
+  starts with no stars and is then the one playing.
 - **M1:** one implicit profile. **M3:** several local profiles (name + avatar, no passwords) for
   shared family and classroom devices, and **share links** that encode a circuit in the URL
   fragment (`#c=<code>`), which never reaches a server.
@@ -51,8 +54,8 @@ the decision and the main reason for it. When the design changes, update this fi
   empty saying the link didn't work. Opening a link, or pasting one into a tab already showing the
   game, opens the sandbox with its circuit; parts the child hasn't unlocked come with it, but the
   tray offers no more of them. **Share** copies the link and shows it to copy by hand too.
-- **Teacher "unlock all"** (`src/ui/TeacherScreen.tsx`): a quiet **For grown-ups** button in the
-  level list's footer opens a gate, a sum of two numbers from 21 to 49 typed in
+- **Teacher "unlock all"** (`src/ui/TeacherScreen.tsx`): a quiet **For grown-ups** button at the
+  foot of the settings opens a gate, a sum of two numbers from 21 to 49 typed in
   (`src/core/gate.ts`), asked afresh each time the screen opens and after each wrong answer. Past
   it, one switch unlocks everything for every player on the device: every part any level offers in
   the sandbox, and the multimeter. Every level is open from the start anyway, so it skips nothing
@@ -410,8 +413,7 @@ tests/e2e/   Playwright
 ## 10. Releases
 
 - **Every merge to `master` deploys** to GitHub Pages. No tagged releases.
-- The level list's footer shows the `package.json` version and short git SHA (a settings screen
-  later).
+- The settings show the `package.json` version and short git SHA.
 - A new version shows **"A new version of Electronics Kit is ready."** with an **Update** button; it
   never reloads by itself. The offer appears only on the level list, never in the middle of a level.
 - **PWA** (`vite-plugin-pwa`, `generateSW`): the service worker precaches every built file, so the
@@ -423,9 +425,9 @@ tests/e2e/   Playwright
   inside the safe circle, and the Apple one to 90 %. The manifest's `id` is set to the start URL, so
   it stays apart from other apps on `spence.com.au`.
 - **Install offer.** Chrome's own install banner shows only now and then, and its menu item is easy
-  to miss, so the level list offers **Install** whenever the browser allows it
+  to miss, so the settings offer **Install** whenever the browser allows it
   (`beforeinstallprompt`). Once installed, the manifest's `related_applications` (the game itself)
-  lets Chrome on Android say so, and the list says to look for "Circuits" in the apps. Browsers
+  lets Chrome on Android say so, and the settings say to look for "Circuits" in the apps. Browsers
   that don't say (Safari, Firefox) show nothing, nor does the installed app.
 
 ## 11. Milestones
