@@ -416,8 +416,12 @@ tests/e2e/   Playwright
   never reloads by itself. The offer appears only on the level list, never in the middle of a level.
 - **PWA** (`vite-plugin-pwa`, `generateSW`): the service worker precaches every built file, so the
   game works offline once loaded. The manifest names the app "Electronics Kit" ("Circuits" on the
-  home screen), in landscape, with a bulb icon in SVG and PNG (`public/`). Its `id` is set to the
-  start URL, so it stays apart from other apps on `spence.com.au`.
+  home screen), in landscape, with a bulb icon: a lit bulb with a glowing filament and a screw
+  base, on orange. Only the SVG (`public/icon.svg`) is in git; the build draws the PNGs from it
+  (`pwaAssets`, with `@vite-pwa/assets-generator`) and adds them to the manifest and `<head>`. The
+  maskable and Apple touch PNGs fill the square; the maskable one scales the bulb to 80 % to keep it
+  inside the safe circle, and the Apple one to 90 %. The manifest's `id` is set to the start URL, so
+  it stays apart from other apps on `spence.com.au`.
 - **Install offer.** Chrome's own install banner shows only now and then, and its menu item is easy
   to miss, so the level list offers **Install** whenever the browser allows it
   (`beforeinstallprompt`). Once installed, the manifest's `related_applications` (the game itself)

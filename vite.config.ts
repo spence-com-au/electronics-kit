@@ -27,7 +27,18 @@ export default defineConfig({
     // "update" rather than reloading under them (docs/design.md §1, §10).
     VitePWA({
       registerType: 'prompt',
-      includeAssets: ['icon.svg', 'apple-touch-icon.png'],
+      // The PNG icons are drawn from the SVG at build time, so only the SVG is in git. The maskable
+      // and Apple icons fill the square on the icon's orange; the maskable one shrinks the bulb to
+      // 80 % to keep it inside the safe circle, the Apple one to 90 %.
+      pwaAssets: {
+        image: 'public/icon.svg',
+        preset: {
+          transparent: { sizes: [192, 512], favicons: [], padding: 0 },
+          maskable: { sizes: [512], padding: 0.2, resizeOptions: { background: '#f28c28' } },
+          apple: { sizes: [180], padding: 0.1, resizeOptions: { background: '#f28c28' } },
+        },
+        overrideManifestIcons: true,
+      },
       manifest: {
         name: 'Electronics Kit',
         short_name: 'Circuits',
@@ -40,17 +51,6 @@ export default defineConfig({
         orientation: 'landscape',
         background_color: '#f4efe6',
         theme_color: '#f28c28',
-        icons: [
-          { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
-          { src: 'icon-512.png', sizes: '512x512', type: 'image/png' },
-          {
-            src: 'icon-maskable-512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable',
-          },
-          { src: 'icon.svg', sizes: 'any', type: 'image/svg+xml' },
-        ],
         // Itself, so the game can ask Chrome whether it's already installed (InstallPrompt.tsx).
         related_applications: [
           {
