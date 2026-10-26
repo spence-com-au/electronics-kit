@@ -553,25 +553,43 @@ test('adds a player with their own progress, and switches back', async ({ page }
   await expect(page.locator('[data-level="loop-3"]').getByLabel('3 of 3 stars')).toBeVisible();
 });
 
-test('keeps changing player, the grown-ups’ settings and the version behind the gear', async ({
+test('keeps changing player, the grown-ups’ settings and the version in the gear’s menu', async ({
   page,
 }) => {
+  const gear = page.getByRole('button', { name: 'Settings' });
+  const changePlayer = page.getByRole('button', { name: 'Change player' });
   await expect(page.getByText('Playing as Player 1')).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Change player' })).toHaveCount(0);
+  await expect(changePlayer).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'For grown-ups' })).toHaveCount(0);
-  await page.getByRole('button', { name: 'Settings' }).click();
-  await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
-  await expect(page.getByText(/^Version \d+\.\d+\.\d+ \(\w+\)$/)).toBeVisible();
 
-  // Change player and For grown-ups go back to the settings, and they back to the levels.
-  await page.getByRole('button', { name: 'Change player' }).click();
+  // It drops down over the level list rather than leaving it.
+  await gear.click();
+  await expect(gear).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.getByText(/^Version \d+\.\d+\.\d+ \(\w+\)$/)).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Chapter 1: Make a loop' })).toBeVisible();
+
+  // Escape, a tap elsewhere or the gear again closes it.
+  await page.keyboard.press('Escape');
+  await expect(changePlayer).toHaveCount(0);
+  await expect(gear).toBeFocused();
+  await gear.click();
+  await page.getByRole('heading', { name: 'Chapter 1: Make a loop' }).click();
+  await expect(changePlayer).toHaveCount(0);
+  await gear.click();
+  await gear.click();
+  await expect(changePlayer).toHaveCount(0);
+
+  // Change player and For grown-ups open their own screens, which go back to the levels.
+  await gear.click();
+  await changePlayer.click();
   await expect(page.getByRole('heading', { name: 'Who’s playing?' })).toBeVisible();
-  await page.getByRole('button', { name: 'Settings' }).click();
+  await page.getByRole('button', { name: 'Levels' }).click();
+  await gear.click();
   await page.getByRole('button', { name: 'For grown-ups' }).click();
   await expect(page.getByRole('heading', { name: 'For grown-ups' })).toBeVisible();
-  await page.getByRole('button', { name: 'Settings' }).click();
   await page.getByRole('button', { name: 'Levels' }).click();
   await expect(page.getByRole('heading', { name: 'Chapter 1: Make a loop' })).toBeVisible();
+  await expect(changePlayer).toHaveCount(0);
 });
 
 test.describe('Volty', () => {

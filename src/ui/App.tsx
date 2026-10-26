@@ -20,7 +20,6 @@ import { LevelList } from './LevelList';
 import { LevelScreen } from './LevelScreen';
 import { SandboxScreen } from './SandboxScreen';
 import { PlayersScreen } from './PlayersScreen';
-import { SettingsScreen } from './SettingsScreen';
 import { TeacherScreen } from './TeacherScreen';
 import { loadSavedPlayers, saveSavedPlayers } from './progressStore';
 import { strings } from './strings';
@@ -111,7 +110,6 @@ type Screen =
       readonly initial: Build;
       readonly badLink?: boolean;
     }
-  | { readonly kind: 'settings' }
   | { readonly kind: 'players' }
   | { readonly kind: 'grown-ups' };
 
@@ -235,17 +233,6 @@ export function App() {
           change((p) => addProfile(p, name, avatar));
           setScreen({ kind: 'levels' });
         }}
-        onBack={() => setScreen({ kind: 'settings' })}
-      />
-    );
-  }
-
-  if (screen.kind === 'settings') {
-    return (
-      <SettingsScreen
-        profile={profile}
-        onPlayers={loaded ? () => setScreen({ kind: 'players' }) : null}
-        onGrownUps={loaded ? () => setScreen({ kind: 'grown-ups' }) : null}
         onBack={() => setScreen({ kind: 'levels' })}
       />
     );
@@ -256,7 +243,7 @@ export function App() {
       <TeacherScreen
         unlockAll={players.unlockAll}
         onUnlockAll={(on) => change((p) => setUnlockAll(p, on))}
-        onBack={() => setScreen({ kind: 'settings' })}
+        onBack={() => setScreen({ kind: 'levels' })}
       />
     );
   }
@@ -290,7 +277,8 @@ export function App() {
           initial: fullBoard.initial,
         })
       }
-      onSettings={() => setScreen({ kind: 'settings' })}
+      onPlayers={loaded ? () => setScreen({ kind: 'players' }) : null}
+      onGrownUps={loaded ? () => setScreen({ kind: 'grown-ups' }) : null}
     />
   );
 }
